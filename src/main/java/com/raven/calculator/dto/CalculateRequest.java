@@ -1,11 +1,11 @@
 package com.raven.calculator.dto;
 
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter
@@ -16,15 +16,15 @@ public class CalculateRequest {
     private OperationType operation;
 
     @NotNull
-    @DecimalMin(value = "-1000000", inclusive = true,
+    @DecimalMin(value = "-1000000",
             message = "operandA must be ≥ -1,000,000")
-    @DecimalMax(value = "1000000", inclusive = true,
+    @DecimalMax(value = "1000000",
             message = "operandA must be ≤ 1,000,000")
     private BigDecimal operandA;
 
-    @DecimalMin(value = "-1000000", inclusive = true,
+    @DecimalMin(value = "-1000000",
             message = "operandB must be ≥ -1,000,000")
-    @DecimalMax(value = "1000000", inclusive = true,
+    @DecimalMax(value = "1000000",
             message = "operandB must be ≤ 1,000,000")
     private BigDecimal operandB;
 

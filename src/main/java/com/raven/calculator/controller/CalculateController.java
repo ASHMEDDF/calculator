@@ -4,13 +4,13 @@ import com.raven.calculator.dto.CalculateRequest;
 import com.raven.calculator.dto.response.OperationResponse;
 import com.raven.calculator.entity.Operation;
 import com.raven.calculator.service.CalculateService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api")

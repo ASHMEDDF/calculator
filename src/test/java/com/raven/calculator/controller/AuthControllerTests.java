@@ -5,6 +5,7 @@ import com.raven.calculator.entity.User;
 import com.raven.calculator.repository.UserRepository;
 import com.raven.calculator.security.JwtUtil;
 import com.raven.calculator.service.AuthService;
+import com.raven.calculator.config.GlobalExceptionHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -22,7 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(AuthController.class)
+@WebMvcTest(controllers = {AuthController.class, GlobalExceptionHandler.class})
 @AutoConfigureMockMvc(addFilters = false)
 class AuthControllerTests {
 

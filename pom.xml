@@ -5,8 +5,8 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.18</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<version>3.2.3</version>  <!-- o la última 3.2.x disponible -->
+		<relativePath/>
 	</parent>
 	<groupId>com.raven</groupId>
 	<artifactId>calculator</artifactId>

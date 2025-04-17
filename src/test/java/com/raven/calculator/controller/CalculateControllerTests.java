@@ -52,12 +52,10 @@ class CalculateControllerTests {
 
     @Test
     void calculate_withValidToken_returns200() throws Exception {
-        // 1) Preparamos el JSON de entrada
         String req = """
       {"operation":"ADDITION","operandA":5,"operandB":3}
     """;
 
-        // 2) Stub del servicio de cálculo
         Operation op = new Operation();
         op.setId(UUID.randomUUID());
         op.setOperationType(ADDITION);
@@ -68,7 +66,6 @@ class CalculateControllerTests {
         op.setUserId(1L);
         when(calcService.calculate(any())).thenReturn(op);
 
-        // 3) Stub del JWT y del UserDetailsService para que nuestro filtro acepte el token
         when(jwtUtil.validateToken("fake")).thenReturn(true);
         when(jwtUtil.getUsernameFromToken("fake")).thenReturn("testuser");
         UserDetails ud = org.springframework.security.core.userdetails.User
@@ -78,7 +75,6 @@ class CalculateControllerTests {
                 .build();
         when(customUserDetailsService.loadUserByUsername("testuser")).thenReturn(ud);
 
-        // 4) Lanzamos la petición con nuestro "fake" Bearer
         mockMvc.perform(post("/api/calculate")
                         .header("Authorization", "Bearer fake")
                         .contentType(APPLICATION_JSON)

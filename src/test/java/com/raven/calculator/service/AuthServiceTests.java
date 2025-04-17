@@ -41,16 +41,14 @@ class AuthServiceTests {
 
     @Test
     void registerSuccess() {
-        // Given
+        
         RegisterUserRequest request = createValidRequest();
         when(userRepo.existsByUsername(request.getUsername())).thenReturn(false);
         when(userRepo.existsByEmail(request.getEmail())).thenReturn(false);
         when(encoder.encode(request.getPassword())).thenReturn("encoded_password");
 
-        // When
         authService.register(request);
 
-        // Then
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
         verify(userRepo).save(userCaptor.capture());
         
@@ -62,11 +60,10 @@ class AuthServiceTests {
 
     @Test
     void registerFailsWhenUsernameExists() {
-        // Given
+        
         RegisterUserRequest request = createValidRequest();
         when(userRepo.existsByUsername(request.getUsername())).thenReturn(true);
 
-        // Then
         assertThrows(IllegalArgumentException.class, 
             () -> authService.register(request),
             "Username already exists"
@@ -77,12 +74,11 @@ class AuthServiceTests {
 
     @Test
     void registerFailsWhenEmailExists() {
-        // Given
+        
         RegisterUserRequest request = createValidRequest();
         when(userRepo.existsByUsername(request.getUsername())).thenReturn(false);
         when(userRepo.existsByEmail(request.getEmail())).thenReturn(true);
 
-        // Then
         assertThrows(IllegalArgumentException.class, 
             () -> authService.register(request),
             "Email already exists"
@@ -93,11 +89,10 @@ class AuthServiceTests {
 
     @Test
     void registerFailsWithInvalidEmail() {
-        // Given
+        
         RegisterUserRequest request = createValidRequest();
         request.setEmail("invalid-email");
 
-        // Then
         assertThrows(IllegalArgumentException.class, 
             () -> authService.register(request),
             "Invalid email format"
@@ -108,11 +103,10 @@ class AuthServiceTests {
 
     @Test
     void registerFailsWithEmptyUsername() {
-        // Given
+        
         RegisterUserRequest request = createValidRequest();
         request.setUsername("");
 
-        // Then
         assertThrows(IllegalArgumentException.class, 
             () -> authService.register(request),
             "Username cannot be empty"
@@ -123,11 +117,10 @@ class AuthServiceTests {
 
     @Test
     void registerFailsWithEmptyPassword() {
-        // Given
+        
         RegisterUserRequest request = createValidRequest();
         request.setPassword("");
-
-        // Then
+        
         assertThrows(IllegalArgumentException.class, 
             () -> authService.register(request),
             "Password cannot be empty"
@@ -138,16 +131,14 @@ class AuthServiceTests {
 
     @Test
     void passwordIsProperlyEncoded() {
-        // Given
+        
         RegisterUserRequest request = createValidRequest();
         when(userRepo.existsByUsername(request.getUsername())).thenReturn(false);
         when(userRepo.existsByEmail(request.getEmail())).thenReturn(false);
         when(encoder.encode(request.getPassword())).thenReturn("encoded_password_123");
 
-        // When
         authService.register(request);
-
-        // Then
+        
         verify(userRepo).save(argThat(user -> 
             user.getPassword().equals("encoded_password_123")
         ));
