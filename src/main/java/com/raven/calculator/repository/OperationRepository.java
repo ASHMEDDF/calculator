@@ -1,6 +1,6 @@
 package com.raven.calculator.repository;
 
-import com.raven.calculator.entity.Operation;
+import com.raven.calculator.entity.OperationEntity;
 import com.raven.calculator.entity.OperationTypeEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.domain.Page;
@@ -10,23 +10,23 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.Instant;
 
-public interface OperationRepository extends JpaRepository<Operation, Long> {
+public interface OperationRepository extends JpaRepository<OperationEntity, Long> {
 
-    Page<Operation> findByUserId(Long userId, Pageable pageable);
+    Page<OperationEntity> findByUserId(Long userId, Pageable pageable);
 
     @Query("""
-      select o
-        from Operation o
-       where o.userId = :userId
-         and (:type  is null or o.operationType = :type)
-         and (:from  is null or o.timestamp >= :from)
-         and (:to    is null or o.timestamp <= :to)
+       SELECT o
+         FROM Operation o
+        WHERE o.userId = :userId
+          AND ( :operationType IS NULL OR o.operationType = :operationType )
+          AND ( :startDate     IS NULL OR o.timestamp      >= :startDate     )
+          AND ( :endDate       IS NULL OR o.timestamp      <= :endDate       )
     """)
-    Page<Operation> findHistoryFiltered(
-            @Param("userId") Long userId,
-            @Param("type") OperationTypeEnum type,
-            @Param("from") Instant from,
-            @Param("to")     Instant to,
-            Pageable        pageable
+    Page<OperationEntity> findHistoryFiltered(
+            @Param("userId")         Long                userId,
+            @Param("operationType")  OperationTypeEnum   operationType,
+            @Param("startDate")      Instant             startDate,
+            @Param("endDate")        Instant             endDate,
+            Pageable            pageable
     );
 }

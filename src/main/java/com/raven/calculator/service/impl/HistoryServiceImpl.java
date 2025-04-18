@@ -1,7 +1,7 @@
 package com.raven.calculator.service.impl;
 import com.raven.calculator.config.exception.OperationNotFoundException;
 import com.raven.calculator.dto.response.OperationResponse;
-import com.raven.calculator.entity.Operation;
+import com.raven.calculator.entity.OperationEntity;
 import com.raven.calculator.entity.OperationTypeEnum;
 import com.raven.calculator.repository.OperationRepository;
 import com.raven.calculator.repository.UserRepository;
@@ -36,7 +36,7 @@ public class HistoryServiceImpl implements HistoryService {
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"))
                 .getId();
 
-        Page<Operation> page = opRepo.findByUserId(userId, pageable);
+        Page<OperationEntity> page = opRepo.findByUserId(userId, pageable);
 
         return page.map(op -> new OperationResponse(
                 op.getId(),
@@ -50,11 +50,11 @@ public class HistoryServiceImpl implements HistoryService {
     }
 
     @Override
-    public Page<Operation> findHistory(Long userId,
-                                       OperationTypeEnum type,
-                                       Instant from,
-                                       Instant to,
-                                       Pageable pageable) {
+    public Page<OperationEntity> findHistory(Long userId,
+                                             OperationTypeEnum type,
+                                             Instant from,
+                                             Instant to,
+                                             Pageable pageable) {
         return opRepo.findHistoryFiltered(userId, type, from, to, pageable);
     }
 

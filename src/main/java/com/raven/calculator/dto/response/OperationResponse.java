@@ -1,6 +1,6 @@
 package com.raven.calculator.dto.response;
 
-import com.raven.calculator.entity.Operation;
+import com.raven.calculator.entity.OperationEntity;
 import com.raven.calculator.entity.OperationTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +20,7 @@ public class OperationResponse {
     private final Instant timestamp;
     private final Long userId;
 
-    public static OperationResponse fromEntity(Operation o) {
+    public static OperationResponse fromEntity(OperationEntity o) {
         return new OperationResponse(
                 o.getId(),
                 o.getOperationType(),

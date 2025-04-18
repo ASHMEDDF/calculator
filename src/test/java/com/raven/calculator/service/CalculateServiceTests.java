@@ -5,7 +5,7 @@ import com.raven.calculator.config.exception.OperandRequiredSquareException;
 import com.raven.calculator.config.exception.OperationNotSupportedException;
 import com.raven.calculator.config.exception.RootOfNegativeException;
 import com.raven.calculator.dto.CalculateRequest;
-import com.raven.calculator.entity.Operation;
+import com.raven.calculator.entity.OperationEntity;
 import com.raven.calculator.entity.OperationTypeEnum;
 import com.raven.calculator.entity.User;
 import com.raven.calculator.repository.OperationRepository;
@@ -110,8 +110,8 @@ class CalculateServiceTests {
         return req;
     }
 
-    private Operation createOperation(OperationTypeEnum type, BigDecimal a, BigDecimal b, BigDecimal result) {
-        Operation op = new Operation();
+    private OperationEntity createOperation(OperationTypeEnum type, BigDecimal a, BigDecimal b, BigDecimal result) {
+        OperationEntity op = new OperationEntity();
         op.setId(UUID.randomUUID());
         op.setOperationType(type);
         op.setOperandA(a);
@@ -127,12 +127,12 @@ class CalculateServiceTests {
         
         CalculateRequest req = createRequest(OperationTypeEnum.ADDITION,
             new BigDecimal("5"), new BigDecimal("3"));
-        Operation expectedOp = createOperation(OperationTypeEnum.ADDITION,
+        OperationEntity expectedOp = createOperation(OperationTypeEnum.ADDITION,
             new BigDecimal("5"), new BigDecimal("3"), new BigDecimal("8.0"));
         when(opRepo.save(any())).thenReturn(expectedOp);
 
         // When
-        Operation result = calculateService.calculate(req);
+        OperationEntity result = calculateService.calculate(req);
 
         // Then
         assertThat(result.getResult()).isEqualByComparingTo("8.0");
@@ -146,12 +146,12 @@ class CalculateServiceTests {
         
         CalculateRequest req = createRequest(OperationTypeEnum.SUBTRACTION,
             new BigDecimal("5"), new BigDecimal("3"));
-        Operation expectedOp = createOperation(OperationTypeEnum.SUBTRACTION,
+        OperationEntity expectedOp = createOperation(OperationTypeEnum.SUBTRACTION,
             new BigDecimal("5"), new BigDecimal("3"), new BigDecimal("2.0"));
         when(opRepo.save(any())).thenReturn(expectedOp);
 
         // When
-        Operation result = calculateService.calculate(req);
+        OperationEntity result = calculateService.calculate(req);
 
         // Then
         assertThat(result.getResult()).isEqualByComparingTo("2.0");
@@ -165,12 +165,12 @@ class CalculateServiceTests {
         
         CalculateRequest req = createRequest(OperationTypeEnum.MULTIPLICATION,
             new BigDecimal("5"), new BigDecimal("3"));
-        Operation expectedOp = createOperation(OperationTypeEnum.MULTIPLICATION,
+        OperationEntity expectedOp = createOperation(OperationTypeEnum.MULTIPLICATION,
             new BigDecimal("5"), new BigDecimal("3"), new BigDecimal("15.0"));
         when(opRepo.save(any())).thenReturn(expectedOp);
 
         // When
-        Operation result = calculateService.calculate(req);
+        OperationEntity result = calculateService.calculate(req);
 
         // Then
         assertThat(result.getResult()).isEqualByComparingTo("15.0");
@@ -184,12 +184,12 @@ class CalculateServiceTests {
         
         CalculateRequest req = createRequest(OperationTypeEnum.DIVISION,
             new BigDecimal("6"), new BigDecimal("3"));
-        Operation expectedOp = createOperation(OperationTypeEnum.DIVISION,
+        OperationEntity expectedOp = createOperation(OperationTypeEnum.DIVISION,
             new BigDecimal("6"), new BigDecimal("3"), new BigDecimal("2.0"));
         when(opRepo.save(any())).thenReturn(expectedOp);
 
         // When
-        Operation result = calculateService.calculate(req);
+        OperationEntity result = calculateService.calculate(req);
 
         // Then
         assertThat(result.getResult()).isEqualByComparingTo("2.0");
@@ -203,12 +203,12 @@ class CalculateServiceTests {
         
         CalculateRequest req = createRequest(OperationTypeEnum.SQUARE_ROOT,
             new BigDecimal("9"), null);
-        Operation expectedOp = createOperation(OperationTypeEnum.SQUARE_ROOT,
+        OperationEntity expectedOp = createOperation(OperationTypeEnum.SQUARE_ROOT,
             new BigDecimal("9"), null, new BigDecimal("3.0"));
         when(opRepo.save(any())).thenReturn(expectedOp);
 
         // When
-        Operation result = calculateService.calculate(req);
+        OperationEntity result = calculateService.calculate(req);
 
         // Then
         assertThat(result.getResult()).isEqualByComparingTo("3.0");
@@ -222,12 +222,12 @@ class CalculateServiceTests {
         
         CalculateRequest req = createRequest(OperationTypeEnum.POWER,
             new BigDecimal("2"), new BigDecimal("3"));
-        Operation expectedOp = createOperation(OperationTypeEnum.POWER,
+        OperationEntity expectedOp = createOperation(OperationTypeEnum.POWER,
             new BigDecimal("2"), new BigDecimal("3"), new BigDecimal("8.0"));
         when(opRepo.save(any())).thenReturn(expectedOp);
 
         // When
-        Operation result = calculateService.calculate(req);
+        OperationEntity result = calculateService.calculate(req);
 
         // Then
         assertThat(result.getResult()).isEqualByComparingTo("8.0");

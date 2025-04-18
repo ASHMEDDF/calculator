@@ -16,13 +16,13 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-@Entity
+@Entity(name = "Operation")
 @Table(name = "operations")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Operation {
+public class OperationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,7 +1,7 @@
 package com.raven.calculator.controller;
 
 import com.raven.calculator.config.SecurityConfig;
-import com.raven.calculator.entity.Operation;
+import com.raven.calculator.entity.OperationEntity;
 import com.raven.calculator.security.CustomUserDetailsService;
 import com.raven.calculator.security.JwtAuthenticationEntryPoint;
 import com.raven.calculator.security.JwtAuthenticationFilter;
@@ -19,7 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.UUID;
 
 import static com.raven.calculator.entity.OperationTypeEnum.ADDITION;
 import static org.mockito.ArgumentMatchers.any;
@@ -56,8 +55,8 @@ class CalculateControllerTests {
       {"operation":"ADDITION","operandA":5,"operandB":3}
     """;
 
-        Operation op = new Operation();
-        op.setId(UUID.randomUUID());
+        OperationEntity op = new OperationEntity();
+        op.setId(1L);
         op.setOperationType(ADDITION);
         op.setOperandA(BigDecimal.valueOf(5));
         op.setOperandB(BigDecimal.valueOf(3));

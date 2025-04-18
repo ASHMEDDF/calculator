@@ -5,7 +5,7 @@ import com.raven.calculator.config.exception.OperandRequiredSquareException;
 import com.raven.calculator.config.exception.OperationNotSupportedException;
 import com.raven.calculator.config.exception.RootOfNegativeException;
 import com.raven.calculator.dto.CalculateRequest;
-import com.raven.calculator.entity.Operation;
+import com.raven.calculator.entity.OperationEntity;
 import com.raven.calculator.entity.OperationTypeEnum;
 import com.raven.calculator.entity.User;
 import com.raven.calculator.repository.OperationRepository;
@@ -42,7 +42,7 @@ public class CalculateService {
         this.userRepo    = userRepo;
     }
 
-    public Operation calculate(CalculateRequest req) {
+    public OperationEntity calculate(CalculateRequest req) {
         BigDecimal a = req.getOperandA();
         BigDecimal b = req.getOperandB();
 
@@ -78,7 +78,7 @@ public class CalculateService {
 
         BigDecimal res = strat.apply(req.getOperandA(), req.getOperandB());
 
-        Operation op = new Operation();
+        OperationEntity op = new OperationEntity();
         op.setOperationType(req.getOperation());
         op.setOperandA(a);
         op.setOperandB(b);

@@ -1,7 +1,7 @@
 package com.raven.calculator.service;
 
 import com.raven.calculator.dto.response.OperationResponse;
-import com.raven.calculator.entity.Operation;
+import com.raven.calculator.entity.OperationEntity;
 import com.raven.calculator.entity.OperationTypeEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,11 +28,11 @@ public interface HistoryService {
             Pageable pageable
     );
 
-    Page<Operation> findHistory(Long userId,
-                                OperationTypeEnum type,
-                                Instant from,
-                                Instant to,
-                                Pageable pageable);
+    Page<OperationEntity> findHistory(Long userId,
+                                      OperationTypeEnum type,
+                                      Instant from,
+                                      Instant to,
+                                      Pageable pageable);
 
     Long findUserIdByUsername(String username);
 
