@@ -1,6 +1,6 @@
 package com.raven.calculator.service.impl;
 
-import com.raven.calculator.dto.OperationType;
+import com.raven.calculator.entity.OperationTypeEnum;
 import com.raven.calculator.service.OperationStrategy;
 
 import java.math.BigDecimal;
@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 public class PowerOperation implements OperationStrategy {
 
     @Override
-    public OperationType getType() {
-        return OperationType.POWER;
+    public OperationTypeEnum getType() {
+        return OperationTypeEnum.POWER;
     }
 
     @Override

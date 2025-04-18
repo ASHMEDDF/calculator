@@ -1,11 +1,11 @@
 package com.raven.calculator.service;
 
-import com.raven.calculator.dto.OperationType;
+import com.raven.calculator.entity.OperationTypeEnum;
 
 import java.math.BigDecimal;
 
 public interface OperationStrategy {
 
-    OperationType getType();
+    OperationTypeEnum getType();
     BigDecimal apply(BigDecimal a, BigDecimal b);
 }

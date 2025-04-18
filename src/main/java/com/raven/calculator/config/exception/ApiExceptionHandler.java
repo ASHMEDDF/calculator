@@ -46,6 +46,11 @@ public class ApiExceptionHandler {
         return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
+    @ExceptionHandler(OperationNotFoundException.class)
+    public ResponseEntity<Map<String,Object>> handleNotFound(OperationNotFoundException ex) {
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Map<String,Object>> handleOther(RuntimeException ex) {
         return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Internal error");

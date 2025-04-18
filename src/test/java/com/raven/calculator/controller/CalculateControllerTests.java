@@ -21,7 +21,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
-import static com.raven.calculator.dto.OperationType.ADDITION;
+import static com.raven.calculator.entity.OperationTypeEnum.ADDITION;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;

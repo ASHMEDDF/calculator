@@ -1,10 +1,10 @@
 package com.raven.calculator.config.exception;
 
-import com.raven.calculator.dto.OperationType;
+import com.raven.calculator.entity.OperationTypeEnum;
 
 public class OperandRequiredSquareException extends RuntimeException {
 
-    public OperandRequiredSquareException(OperationType type) {
+    public OperandRequiredSquareException(OperationTypeEnum type) {
         super("operandB is required for " + type);
     }
 }

@@ -1,5 +1,6 @@
 package com.raven.calculator.dto;
 
+import com.raven.calculator.entity.OperationTypeEnum;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +14,7 @@ import java.math.BigDecimal;
 public class CalculateRequest {
 
     @NotNull
-    private OperationType operation;
+    private OperationTypeEnum operation;
 
     @NotNull
     @DecimalMin(value = "-1000000",

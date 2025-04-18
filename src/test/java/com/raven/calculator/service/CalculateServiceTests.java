@@ -5,8 +5,8 @@ import com.raven.calculator.config.exception.OperandRequiredSquareException;
 import com.raven.calculator.config.exception.OperationNotSupportedException;
 import com.raven.calculator.config.exception.RootOfNegativeException;
 import com.raven.calculator.dto.CalculateRequest;
-import com.raven.calculator.dto.OperationType;
 import com.raven.calculator.entity.Operation;
+import com.raven.calculator.entity.OperationTypeEnum;
 import com.raven.calculator.entity.User;
 import com.raven.calculator.repository.OperationRepository;
 import com.raven.calculator.repository.UserRepository;
@@ -61,12 +61,12 @@ class CalculateServiceTests {
     @BeforeEach
     void setup() {
         // Setup strategy types
-        lenient().when(additionStrat.getType()).thenReturn(OperationType.ADDITION);
-        lenient().when(subtractionStrat.getType()).thenReturn(OperationType.SUBTRACTION);
-        lenient().when(multiplicationStrat.getType()).thenReturn(OperationType.MULTIPLICATION);
-        lenient().when(divisionStrat.getType()).thenReturn(OperationType.DIVISION);
-        lenient().when(squareRootStrat.getType()).thenReturn(OperationType.SQUARE_ROOT);
-        lenient().when(powerStrat.getType()).thenReturn(OperationType.POWER);
+        lenient().when(additionStrat.getType()).thenReturn(OperationTypeEnum.ADDITION);
+        lenient().when(subtractionStrat.getType()).thenReturn(OperationTypeEnum.SUBTRACTION);
+        lenient().when(multiplicationStrat.getType()).thenReturn(OperationTypeEnum.MULTIPLICATION);
+        lenient().when(divisionStrat.getType()).thenReturn(OperationTypeEnum.DIVISION);
+        lenient().when(squareRootStrat.getType()).thenReturn(OperationTypeEnum.SQUARE_ROOT);
+        lenient().when(powerStrat.getType()).thenReturn(OperationTypeEnum.POWER);
 
         // Create list of strategies
         strategies = Arrays.asList(
@@ -102,7 +102,7 @@ class CalculateServiceTests {
         lenient().when(userRepo.findByUsername("testuser")).thenReturn(Optional.of(user));
     }
 
-    private CalculateRequest createRequest(OperationType operation, BigDecimal a, BigDecimal b) {
+    private CalculateRequest createRequest(OperationTypeEnum operation, BigDecimal a, BigDecimal b) {
         CalculateRequest req = new CalculateRequest();
         req.setOperation(operation);
         req.setOperandA(a);
@@ -110,7 +110,7 @@ class CalculateServiceTests {
         return req;
     }
 
-    private Operation createOperation(OperationType type, BigDecimal a, BigDecimal b, BigDecimal result) {
+    private Operation createOperation(OperationTypeEnum type, BigDecimal a, BigDecimal b, BigDecimal result) {
         Operation op = new Operation();
         op.setId(UUID.randomUUID());
         op.setOperationType(type);
@@ -125,9 +125,9 @@ class CalculateServiceTests {
         // Given
         when(additionStrat.apply(any(), any())).thenReturn(new BigDecimal("8.0"));
         
-        CalculateRequest req = createRequest(OperationType.ADDITION, 
+        CalculateRequest req = createRequest(OperationTypeEnum.ADDITION,
             new BigDecimal("5"), new BigDecimal("3"));
-        Operation expectedOp = createOperation(OperationType.ADDITION, 
+        Operation expectedOp = createOperation(OperationTypeEnum.ADDITION,
             new BigDecimal("5"), new BigDecimal("3"), new BigDecimal("8.0"));
         when(opRepo.save(any())).thenReturn(expectedOp);
 
@@ -144,9 +144,9 @@ class CalculateServiceTests {
         // Given
         when(subtractionStrat.apply(any(), any())).thenReturn(new BigDecimal("2.0"));
         
-        CalculateRequest req = createRequest(OperationType.SUBTRACTION,
+        CalculateRequest req = createRequest(OperationTypeEnum.SUBTRACTION,
             new BigDecimal("5"), new BigDecimal("3"));
-        Operation expectedOp = createOperation(OperationType.SUBTRACTION,
+        Operation expectedOp = createOperation(OperationTypeEnum.SUBTRACTION,
             new BigDecimal("5"), new BigDecimal("3"), new BigDecimal("2.0"));
         when(opRepo.save(any())).thenReturn(expectedOp);
 
@@ -163,9 +163,9 @@ class CalculateServiceTests {
         // Given
         when(multiplicationStrat.apply(any(), any())).thenReturn(new BigDecimal("15.0"));
         
-        CalculateRequest req = createRequest(OperationType.MULTIPLICATION,
+        CalculateRequest req = createRequest(OperationTypeEnum.MULTIPLICATION,
             new BigDecimal("5"), new BigDecimal("3"));
-        Operation expectedOp = createOperation(OperationType.MULTIPLICATION,
+        Operation expectedOp = createOperation(OperationTypeEnum.MULTIPLICATION,
             new BigDecimal("5"), new BigDecimal("3"), new BigDecimal("15.0"));
         when(opRepo.save(any())).thenReturn(expectedOp);
 
@@ -182,9 +182,9 @@ class CalculateServiceTests {
         // Given
         when(divisionStrat.apply(any(), any())).thenReturn(new BigDecimal("2.0"));
         
-        CalculateRequest req = createRequest(OperationType.DIVISION,
+        CalculateRequest req = createRequest(OperationTypeEnum.DIVISION,
             new BigDecimal("6"), new BigDecimal("3"));
-        Operation expectedOp = createOperation(OperationType.DIVISION,
+        Operation expectedOp = createOperation(OperationTypeEnum.DIVISION,
             new BigDecimal("6"), new BigDecimal("3"), new BigDecimal("2.0"));
         when(opRepo.save(any())).thenReturn(expectedOp);
 
@@ -201,9 +201,9 @@ class CalculateServiceTests {
         // Given
         when(squareRootStrat.apply(any(), any())).thenReturn(new BigDecimal("3.0"));
         
-        CalculateRequest req = createRequest(OperationType.SQUARE_ROOT,
+        CalculateRequest req = createRequest(OperationTypeEnum.SQUARE_ROOT,
             new BigDecimal("9"), null);
-        Operation expectedOp = createOperation(OperationType.SQUARE_ROOT,
+        Operation expectedOp = createOperation(OperationTypeEnum.SQUARE_ROOT,
             new BigDecimal("9"), null, new BigDecimal("3.0"));
         when(opRepo.save(any())).thenReturn(expectedOp);
 
@@ -220,9 +220,9 @@ class CalculateServiceTests {
         // Given
         when(powerStrat.apply(any(), any())).thenReturn(new BigDecimal("8.0"));
         
-        CalculateRequest req = createRequest(OperationType.POWER,
+        CalculateRequest req = createRequest(OperationTypeEnum.POWER,
             new BigDecimal("2"), new BigDecimal("3"));
-        Operation expectedOp = createOperation(OperationType.POWER,
+        Operation expectedOp = createOperation(OperationTypeEnum.POWER,
             new BigDecimal("2"), new BigDecimal("3"), new BigDecimal("8.0"));
         when(opRepo.save(any())).thenReturn(expectedOp);
 
@@ -237,7 +237,7 @@ class CalculateServiceTests {
     @Test
     void divisionByZero_throws() {
         // Given
-        CalculateRequest req = createRequest(OperationType.DIVISION,
+        CalculateRequest req = createRequest(OperationTypeEnum.DIVISION,
             BigDecimal.TEN, BigDecimal.ZERO);
 
         // Then
@@ -248,7 +248,7 @@ class CalculateServiceTests {
     @Test
     void squareRootOfNegative_throws() {
         // Given
-        CalculateRequest req = createRequest(OperationType.SQUARE_ROOT,
+        CalculateRequest req = createRequest(OperationTypeEnum.SQUARE_ROOT,
             new BigDecimal("-9"), null);
 
         // Then
@@ -259,7 +259,7 @@ class CalculateServiceTests {
     @Test
     void operandAOutOfRange_throws() {
         // Given
-        CalculateRequest req = createRequest(OperationType.ADDITION,
+        CalculateRequest req = createRequest(OperationTypeEnum.ADDITION,
             new BigDecimal("-1000001"), BigDecimal.ONE);
 
         // Then
@@ -270,7 +270,7 @@ class CalculateServiceTests {
     @Test
     void operandBOutOfRange_throws() {
         // Given
-        CalculateRequest req = createRequest(OperationType.ADDITION,
+        CalculateRequest req = createRequest(OperationTypeEnum.ADDITION,
             BigDecimal.ONE, new BigDecimal("1000001"));
 
         // Then
@@ -291,7 +291,7 @@ class CalculateServiceTests {
     @Test
     void squareRootRequiresOperandB_throws() {
         // Given
-        CalculateRequest req = createRequest(OperationType.SQUARE_ROOT,
+        CalculateRequest req = createRequest(OperationTypeEnum.SQUARE_ROOT,
             BigDecimal.ONE, BigDecimal.ONE);
 
         // Then

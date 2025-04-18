@@ -1,6 +1,6 @@
 package com.raven.calculator.service.impl;
 
-import com.raven.calculator.dto.OperationType;
+import com.raven.calculator.entity.OperationTypeEnum;
 import com.raven.calculator.service.OperationStrategy;
 import org.springframework.stereotype.Component;
 
@@ -10,8 +10,8 @@ import java.math.BigDecimal;
 public class AdditionOperation implements OperationStrategy {
 
     @Override
-    public OperationType getType() {
-        return OperationType.ADDITION;
+    public OperationTypeEnum getType() {
+        return OperationTypeEnum.ADDITION;
     }
 
     @Override

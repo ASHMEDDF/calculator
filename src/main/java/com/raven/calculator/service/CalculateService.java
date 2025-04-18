@@ -5,8 +5,8 @@ import com.raven.calculator.config.exception.OperandRequiredSquareException;
 import com.raven.calculator.config.exception.OperationNotSupportedException;
 import com.raven.calculator.config.exception.RootOfNegativeException;
 import com.raven.calculator.dto.CalculateRequest;
-import com.raven.calculator.dto.OperationType;
 import com.raven.calculator.entity.Operation;
+import com.raven.calculator.entity.OperationTypeEnum;
 import com.raven.calculator.entity.User;
 import com.raven.calculator.repository.OperationRepository;
 import com.raven.calculator.repository.UserRepository;
@@ -27,7 +27,7 @@ public class CalculateService {
     private static final BigDecimal MIN_VALUE = new BigDecimal("-1000000");
     private static final BigDecimal MAX_VALUE = new BigDecimal("1000000");
 
-    private final Map<OperationType, OperationStrategy> strategyMap;
+    private final Map<OperationTypeEnum, OperationStrategy> strategyMap;
     private final OperationRepository opRepo;
     private final UserRepository userRepo;
 
@@ -50,7 +50,7 @@ public class CalculateService {
             throw new IllegalArgumentException("operandA must be between -1,000,000 and 1,000,000");
         }
 
-        if (req.getOperation() != OperationType.SQUARE_ROOT) {
+        if (req.getOperation() != OperationTypeEnum.SQUARE_ROOT) {
             if (b == null) {
                 throw new OperandRequiredSquareException(req.getOperation());
             }
@@ -66,12 +66,12 @@ public class CalculateService {
             throw new OperationNotSupportedException(req.getOperation());
         }
 
-        if (req.getOperation() == OperationType.DIVISION
+        if (req.getOperation() == OperationTypeEnum.DIVISION
                 && req.getOperandB().compareTo(BigDecimal.ZERO) == 0) {
             throw new DivisionByZeroException();
         }
 
-        if (req.getOperation() == OperationType.SQUARE_ROOT
+        if (req.getOperation() == OperationTypeEnum.SQUARE_ROOT
                 && req.getOperandA().compareTo(BigDecimal.ZERO) < 0) {
             throw new RootOfNegativeException();
         }
